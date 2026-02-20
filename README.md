@@ -1,170 +1,241 @@
+<div align="center">
+
 # 🎬 Movie Recommender System
 
-A smart **movie recommendation engine** built with **Python, Streamlit, and scikit-learn**, designed to suggest movies you’ll actually enjoy! This system leverages **content-based filtering** to recommend films based on genres, cast, crew, and plot similarities.
+### Content-Based Filtering · TMDB 5000 Dataset · Streamlit
+
+[![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org)
+[![TMDB](https://img.shields.io/badge/Dataset-TMDB_5000-01b4e4?style=for-the-badge)](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata)
+[![License](https://img.shields.io/badge/License-Educational-22c55e?style=for-the-badge)](#-license)
+
+> A smart **movie recommendation engine** that suggests films you'll actually enjoy —  
+> powered by **cosine similarity** on cast, crew, genres, keywords, and plot tags  
+> from the **TMDB 5000 Movies Dataset**.
+
+</div>
 
 ---
 
 ## ✨ Features
 
-- **Content-Based Recommendations**: Finds movies similar to your choice.
-- **Interactive UI**: Easy-to-use web interface powered by **Streamlit**.
-- **Movie Details**: Displays posters, release years, and ratings.
-- **Top 5 Recommendations**: Quickly shows the 5 most relevant movies.
-- **Large Dataset**: Works with the TMDB 5000 movies dataset for extensive coverage.
+| Feature | Details |
+|---|---|
+| 🎯 **Content-Based Filtering** | Recommendations based on genres, cast, crew & plot |
+| 🔢 **5000-Feature Vectorisation** | `CountVectorizer` bag-of-words + Porter stemming |
+| 📐 **Cosine Similarity** | Accurate similarity scores across all ~4800 movies |
+| 🖥️ **Interactive Streamlit UI** | Dropdown search, top-5 grid with posters & ratings |
+| 📅 **Movie Details** | Shows release year and TMDB rating per recommendation |
+| 📦 **Large Coverage** | TMDB 5000 movies — broad genre and era coverage |
+
+---
+
+## 🏗️ How It Works
+
+```
+User selects a movie
+        │
+        ▼
+┌───────────────────────────┐
+│   Data Preprocessing       │  ← merge movies + credits CSVs
+│   Extract: genres, cast,   │  ← top 3 cast + director
+│   crew, keywords, overview │  ← lowercase + Porter stemming
+└────────────┬──────────────┘
+             │  Combined "tags"
+             ▼
+┌───────────────────────────┐
+│   CountVectorizer          │  ← 5000 features, English stop words removed
+│   Bag-of-Words Matrix      │
+└────────────┬──────────────┘
+             │
+             ▼
+┌───────────────────────────┐
+│   Cosine Similarity Matrix │  ← every movie vs every movie
+└────────────┬──────────────┘
+             │  Top-5 nearest neighbours (excluding selected)
+             ▼
+      5 Movie Recommendations
+   (title · poster · year · rating)
+```
 
 ---
 
 ## 📊 Dataset
 
-We use the **TMDB 5000 movies dataset**, which includes:
+**[TMDB 5000 Movie Metadata](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata)**
 
-- Titles, overviews, and metadata
-- Cast and crew information
-- Genres and keywords
-- Release dates and ratings
-
----
-
-## ⚙️ How It Works
-
-1. **Data Preprocessing**  
-   - Merge movie and credits data  
-   - Extract and clean genres, keywords, cast, and crew  
-   - Combine tags from overview, genres, keywords, cast, and crew  
-   - Apply text preprocessing (lowercasing, stemming)
-
-2. **Feature Engineering**  
-   - Use `CountVectorizer` to create a 5000-feature vector representation  
-   - Calculate **cosine similarity** between movies
-
-3. **Recommendation Engine**  
-   - Find the most similar movies  
-   - Return the top 5 recommendations excluding the selected movie
+| File | Description |
+|---|---|
+| `tmdb_5000_movies.csv` | Titles, overviews, genres, keywords, ratings |
+| `tmdb_5000_credits.csv` | Full cast and crew per movie |
 
 ---
 
-## 🚀 Installation
+## 📁 Project Structure
 
-1. Clone the repository:
+```
+Movie_Recommender/
+│
+├── app.py                    # Streamlit web application
+├── Movie_Recommender.ipynb   # Data processing & model building notebook
+│
+├── tmdb_5000_movies.csv      # TMDB movies dataset
+├── tmdb_5000_credits.csv     # TMDB credits dataset
+│
+├── movies.pkl                # Processed movie data with tags  (generated)
+├── similarity.pkl            # Cosine similarity matrix        (generated)
+│
+├── requirements.txt          # Python dependencies
+└── README.md                 # Project documentation
+```
+
+> ⚠️ `movies.pkl` and `similarity.pkl` are **generated** by running the notebook. They are not included in the repo.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| **Web UI** | [Streamlit](https://streamlit.io/) |
+| **Data Manipulation** | [pandas](https://pandas.pydata.org/), [numpy](https://numpy.org/) |
+| **ML / Similarity** | [scikit-learn](https://scikit-learn.org/) — `CountVectorizer`, `cosine_similarity` |
+| **NLP** | [NLTK](https://www.nltk.org/) — `PorterStemmer` |
+| **HTTP** | [requests](https://requests.readthedocs.io/) |
+
+---
+
+## ⚙️ Setup & Installation
+
+### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/chyk2468/Movie_Recommender.git
 cd Movie_Recommender
 ```
 
-2. Install dependencies:
+### 2. Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Download NLTK data (if needed):
+### 3. Download NLTK Data
+
 ```python
 import nltk
 nltk.download('punkt')
 ```
 
+### 4. Build the Model
+
+Open and run **all cells** in `Movie_Recommender.ipynb`:
+
+```bash
+jupyter notebook Movie_Recommender.ipynb
+```
+
+This will:
+- Merge and preprocess TMDB datasets
+- Build the 5000-feature cosine similarity matrix
+- Save `movies.pkl` and `similarity.pkl`
+
+### 5. Launch the App
+
+```bash
+streamlit run app.py
+```
+
+Open your browser at **`http://localhost:8501`**
+
 ---
 
 ## 🖥️ Usage
 
-### Data Processing
-1. Open `Movie_Recommender.ipynb`
-2. Run all cells to:
-   - Preprocess TMDB dataset  
-   - Create similarity matrix  
-   - Save model files (`movies.pkl`, `similarity.pkl`)
-
-### Running the Web App
-```bash
-streamlit run app.py
-```
-- Open your browser at `http://localhost:8501`  
-- Select a movie from the dropdown  
-- Click **Show Recommendation** to see your top 5 movies!
-
----
-
-## 📂 File Structure
-
-```
-Movie_Recommender/
-├── app.py                  # Streamlit web app
-├── Movie_Recommender.ipynb # Data processing notebook
-├── requirements.txt        # Python dependencies
-├── tmdb_5000_movies.csv    # Movies dataset
-├── tmdb_5000_credits.csv   # Credits dataset
-├── movies.pkl              # Processed movie data (generated)
-├── similarity.pkl          # Similarity matrix (generated)
-└── README.md               # Project documentation
-```
-
----
-
-## 🛠️ Dependencies
-
-- **streamlit** – Web interface  
-- **pandas** – Data manipulation  
-- **numpy** – Numerical computing  
-- **scikit-learn** – Machine learning  
-- **nltk** – Natural language processing  
-- **matplotlib** – Data visualization  
-- **requests** – HTTP requests
-
----
-
-## 📦 Model Files
-
-- `movies.pkl`: Contains processed movie data with tags  
-- `similarity.pkl`: Contains the cosine similarity matrix  
-
-> **Note**: These files must be generated by running the notebook before using the app.
+1. Select a movie from the **dropdown search box**
+2. Click **Show Recommendation**
+3. View your **Top 5 recommended movies** with:
+   - 🎞️ Movie poster
+   - 📅 Release year
+   - ⭐ TMDB rating
 
 ---
 
 ## 🧠 Algorithm Details
 
-1. **Text Preprocessing**  
-   - Lowercase conversion  
-   - Porter stemming  
-   - Removing spaces and special characters
+### Text Preprocessing
+```
+genres + keywords + top-3 cast + director + overview
+        │
+        ▼
+  lowercase → remove spaces → Porter stemming
+        │
+        ▼
+  Single combined "tags" string per movie
+```
 
-2. **Feature Extraction**  
-   - `CountVectorizer` with 5000 features  
-   - Bag-of-words representation  
-   - English stop words removed
+### Feature Extraction
+- `CountVectorizer(max_features=5000, stop_words='english')`
+- Produces a sparse matrix of shape `(~4800, 5000)`
 
-3. **Similarity Calculation**  
-   - Cosine similarity between all movie pairs  
-   - Higher scores = more similar movies
-
----
-
-## ⚙️ Customization
-
-- Adjust number of features in `CountVectorizer`  
-- Change the number of recommendations  
-- Add more movie features to tags  
-- Use different similarity metrics
+### Similarity Calculation
+- **Cosine similarity**: measures the angle between two tag vectors
+- Score range: `0.0` (no similarity) → `1.0` (identical)
+- Top-5 most similar titles returned (excluding the selected movie itself)
 
 ---
 
-## ❌ Troubleshooting
+## 🔧 Customisation
 
-- **Model files missing**: Run the notebook first  
-- **NLTK errors**: Ensure NLTK data is downloaded  
-- **Memory issues**: Large similarity matrix; require sufficient RAM
+```python
+# Change number of features
+CountVectorizer(max_features=10000)
+
+# Change number of recommendations (app.py)
+distances[1:11]  # top 10 instead of 5
+
+# Add more tags
+tags = genres + keywords + cast + crew + overview + production_companies
+```
 
 ---
 
-## 🌟 Future Enhancements
+## ❗ Troubleshooting
 
-- User-based collaborative filtering  
-- Hybrid recommendation system  
-- Real-time poster fetching from TMDB API  
-- User rating and feedback integration  
-- Advanced text preprocessing techniques
+| Issue | Fix |
+|---|---|
+| `FileNotFoundError: movies.pkl` | Run `Movie_Recommender.ipynb` first |
+| `LookupError: punkt` | Run `nltk.download('punkt')` |
+| Memory issues | Reduce `max_features` or use a machine with ≥4 GB RAM |
+| Slow loading | The similarity matrix is large (~180 MB) — normal on first load |
+
+---
+
+## 🚀 Future Enhancements
+
+- [ ] 🔗 Live poster fetching via TMDB API
+- [ ] 👥 Collaborative filtering (user-based)
+- [ ] 🔀 Hybrid recommendation (content + collaborative)
+- [ ] ⭐ User rating & feedback integration
+- [ ] 🔍 Advanced NLP — TF-IDF, word embeddings
+- [ ] 🎭 Genre filter and year range selector
 
 ---
 
 ## 📜 License
 
-This project is for **educational purposes**. Ensure you have the rights to use the TMDB dataset for your specific use case.
+This project is built for **educational purposes**.  
+The TMDB dataset is used under [TMDB's terms of use](https://www.themoviedb.org/terms-of-use).
+
+---
+
+<div align="center">
+
+Made with ❤️ by **Ch. Yashwant Kumar**
+
+[![GitHub](https://img.shields.io/badge/GitHub-chyk2468-181717?style=flat-square&logo=github)](https://github.com/chyk2468)
+
+⭐ If you found this useful, please consider starring the repo!
+
+</div>
