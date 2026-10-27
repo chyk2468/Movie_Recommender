@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400" role="img" aria-labelledby="title desc">
+ <title id="title">Movie Recommender workflow</title><desc id="desc">A content-based recommender that builds movie tags from metadata and ranks similar titles using CountVectorizer and cosine similarity.</desc>
+ <rect width="1200" height="400" rx="18" fill="#F4F0E6"/>
+ <text x="56" y="42" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" letter-spacing="2.2" fill="#263A4B">PROJECT MAP  /  WORKFLOW</text>
+ <text x="56" y="78" font-family="Arial,Helvetica,sans-serif" font-size="26" font-weight="700" fill="#202B37">Movie Recommender</text>
+ <text x="56" y="105" font-family="Arial,Helvetica,sans-serif" font-size="14" fill="#6D7779">Find films with similar story and metadata.</text>
+ <line x1="56" y1="125" x2="1144" y2="125" stroke="#D9D5C9" stroke-width="1"/>
+ <path d="M 300 237 L 330 237" stroke="#6D7779" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M 325 232 L 330 237 L 325 242" stroke="#6D7779" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M 584 237 L 614 237" stroke="#6D7779" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M 609 232 L 614 237 L 609 242" stroke="#6D7779" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M 868 237 L 898 237" stroke="#6D7779" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M 893 232 L 898 237 L 893 242" stroke="#6D7779" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><g>
+    <rect x="56" y="158" width="236" height="158" rx="12" fill="#FFFEFA" stroke="#D9D5C9" stroke-width="1.4"/>
+    <rect x="56" y="158" width="236" height="5" rx="2.5" fill="#263A4B"/>
+    <text x="73" y="187" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" letter-spacing="1.6" fill="#263A4B">01 / SELECT A FILM</text>
+    <text x="73" y="221" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#202B37">Search a title</text>
+    <text x="73" y="249" font-family="Arial,Helvetica,sans-serif" font-size="12.5" fill="#6D7779">Choose a movie in the app.</text>
+  </g><g>
+    <rect x="340" y="158" width="236" height="158" rx="12" fill="#FFFEFA" stroke="#D9D5C9" stroke-width="1.4"/>
+    <rect x="340" y="158" width="236" height="5" rx="2.5" fill="#BA914F"/>
+    <text x="357" y="187" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" letter-spacing="1.6" fill="#BA914F">02 / COMBINE TAGS</text>
+    <text x="357" y="221" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#202B37">Metadata into text</text>
+    <text x="357" y="249" font-family="Arial,Helvetica,sans-serif" font-size="12.5" fill="#6D7779">Genres, cast, crew, and overview.</text>
+  </g><g>
+    <rect x="624" y="158" width="236" height="158" rx="12" fill="#FFFEFA" stroke="#D9D5C9" stroke-width="1.4"/>
+    <rect x="624" y="158" width="236" height="5" rx="2.5" fill="#65847D"/>
+    <text x="641" y="187" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" letter-spacing="1.6" fill="#65847D">03 / SCORE SIMILARITY</text>
+    <text x="641" y="221" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#202B37">Vectorise and compare</text>
+    <text x="641" y="249" font-family="Arial,Helvetica,sans-serif" font-size="12.5" fill="#6D7779">CountVectorizer + cosine similarity.</text>
+  </g><g>
+    <rect x="908" y="158" width="236" height="158" rx="12" fill="#FFFEFA" stroke="#D9D5C9" stroke-width="1.4"/>
+    <rect x="908" y="158" width="236" height="5" rx="2.5" fill="#263A4B"/>
+    <text x="925" y="187" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" letter-spacing="1.6" fill="#263A4B">04 / RANK RESULTS</text>
+    <text x="925" y="221" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#202B37">Top similar titles</text>
+    <text x="925" y="249" font-family="Arial,Helvetica,sans-serif" font-size="12.5" fill="#6D7779">Return recommendations with details.</text>
+  </g>
+ <text x="56" y="358" font-family="Arial,Helvetica,sans-serif" font-size="10.5" font-weight="700" letter-spacing="1.5" fill="#263A4B">IMPLEMENTATION NOTE</text>
+ <text x="56" y="380" font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#6D7779">Content-based ranking compares movie metadata, not personal user history.</text>
+</svg>
